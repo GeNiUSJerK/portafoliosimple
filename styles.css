@@ -627,6 +627,221 @@ body {
   letter-spacing: 0.02em;
 }
 
+.project-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== Ventana emergente: Anotaciones ===== */
+.annotations-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+}
+
+.annotations-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.annotations-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0, 212, 170, 0.1);
+}
+
+.annotations-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.annotations-modal-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.annotations-modal-project-name {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.annotations-modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.annotations-modal-close:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.annotations-modal-content .annotations-form {
+  margin-bottom: var(--space-lg);
+}
+
+.annotations-modal-content .annotations-form label span {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.annotations-modal-content .annotations-form input,
+.annotations-modal-content .annotations-form textarea {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.annotations-modal-content .annotations-form textarea {
+  min-height: 100px;
+}
+
+/* ===== Anotaciones (lista dentro del modal) ===== */
+
+.annotations-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.annotation-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  flex-wrap: wrap;
+}
+
+.annotation-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.annotation-item-title {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--accent);
+  margin-bottom: var(--space-xs);
+}
+
+.annotation-item-body {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.annotation-item-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* ===== Anotaciones (dropdown en tarjetas públicas) ===== */
+.project-annotations-dropdown {
+  position: relative;
+}
+
+.annotations-toggle {
+  font-size: 0.75rem;
+}
+
+.annotations-dropdown-content {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  margin-bottom: var(--space-xs);
+  min-width: 280px;
+  max-width: 360px;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+}
+
+.annotations-dropdown-content.hidden {
+  display: none !important;
+}
+
+.annotation-dropdown-item {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.annotation-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.annotation-dropdown-item strong {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  margin-bottom: var(--space-xs);
+}
+
+.annotation-dropdown-item p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.annotations-empty {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  padding: var(--space-md) 0;
+}
+
 /* ===== Calendario (vista página) ===== */
 .calendar-layout {
   padding: var(--space-xl);

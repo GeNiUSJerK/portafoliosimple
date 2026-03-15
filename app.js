@@ -100,6 +100,7 @@ async function loadProjects() {
       <div class="crud-item-actions">
         <button type="button" class="edit" data-id="${p.id}">Editar</button>
         <button type="button" class="delete" data-id="${p.id}">Eliminar</button>
+        <button type="button" class="open-annotations-modal" data-project-id="${p.id}" data-project-title="${escapeHtml(p.title)}">Anotaciones ▼</button>
       </div>
     </div>
   `).join('');
@@ -123,31 +124,184 @@ async function loadProjects() {
     });
   });
 
-  // Grid público: estáticos + dinámicos
+  list.querySelectorAll('.open-annotations-modal').forEach(btn => {
+    btn.addEventListener('click', () => openAnnotationsModal(btn.dataset.projectId, btn.dataset.projectTitle || 'Proyecto'));
+  });
+
+  // Grid público: estáticos + dinámicos (con dropdown Anotaciones)
   const dynamic = items.map(p => `
-    <article class="project-card glass">
+    <article class="project-card glass" data-project-id="${p.id}">
       <h3 class="font-mono">${escapeHtml(p.title)}</h3>
       <p>${escapeHtml(p.description || '')}</p>
       <div class="project-tags">${(p.technologies || '').split(',').map(t => t.trim()).filter(Boolean).map(t => `<span>${escapeHtml(t)}</span>`).join('')}</div>
-      <a href="${escapeHtml(p.url || '#')}" class="btn btn-small" target="_blank" rel="noopener">GitHub</a>
+      <div class="project-card-footer">
+        <a href="${escapeHtml(p.url || '#')}" class="btn btn-small" target="_blank" rel="noopener">GitHub</a>
+        <div class="project-annotations-dropdown">
+          <button type="button" class="btn btn-ghost btn-small annotations-toggle" data-project-id="${p.id}">Anotaciones (<span class="annotations-count">0</span>)</button>
+          <div class="annotations-dropdown-content hidden"></div>
+        </div>
+      </div>
     </article>
   `).join('');
   grid.innerHTML = staticCards.length ? (staticCards[0].outerHTML + dynamic) : dynamic;
+  bindPublicAnnotationsDropdowns();
+  updatePublicAnnotationCounts();
+}
+
+function openAnnotationsModal(projectId, projectTitle) {
+  const modal = document.getElementById('annotations-modal');
+  const content = modal.querySelector('.annotations-modal-content');
+  const nameEl = modal.querySelector('.annotations-modal-project-name');
+  content.dataset.projectId = projectId;
+  nameEl.textContent = projectTitle || 'Proyecto';
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  renderAnnotationsInPanel(content);
+  modal.querySelector('.annotation-id').value = '';
+  modal.querySelector('.annotation-title').value = '';
+  modal.querySelector('.annotation-content').value = '';
+}
+
+function closeAnnotationsModal() {
+  const modal = document.getElementById('annotations-modal');
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function bindAnnotationsModal() {
+  const modal = document.getElementById('annotations-modal');
+  if (!modal) return;
+  const content = modal.querySelector('.annotations-modal-content');
+  modal.querySelector('.annotations-modal-backdrop')?.addEventListener('click', closeAnnotationsModal);
+  modal.querySelector('.annotations-modal-close')?.addEventListener('click', closeAnnotationsModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeAnnotationsModal();
+  });
+  modal.querySelector('.annotation-save')?.addEventListener('click', async () => {
+    const pid = content.dataset.projectId;
+    const idInput = content.querySelector('.annotation-id');
+    const titleInput = content.querySelector('.annotation-title');
+    const contentInput = content.querySelector('.annotation-content');
+    const title = titleInput.value.trim();
+    const contentText = contentInput.value.trim();
+    if (!title && !contentText) return;
+    if (idInput.value) {
+      await updateAnnotation(idInput.value, { title, content: contentText });
+      idInput.value = '';
+    } else {
+      await addAnnotation(pid, { title, content: contentText });
+    }
+    titleInput.value = '';
+    contentInput.value = '';
+    await renderAnnotationsInPanel(content);
+    updatePublicAnnotationCounts();
+  });
+  modal.querySelector('.annotation-cancel')?.addEventListener('click', () => {
+    content.querySelector('.annotation-id').value = '';
+    content.querySelector('.annotation-title').value = '';
+    content.querySelector('.annotation-content').value = '';
+  });
+}
+
+async function renderAnnotationsInPanel(panel) {
+  const listEl = panel.querySelector('.annotations-list');
+  if (!listEl) return;
+  const pid = panel.dataset.projectId;
+  const annotations = await getAnnotationsByProject(pid);
+  listEl.innerHTML = annotations.map(a => `
+    <div class="annotation-item" data-id="${a.id}">
+      <div class="annotation-item-content">
+        <strong class="annotation-item-title">${escapeHtml(a.title || 'Sin título')}</strong>
+        <p class="annotation-item-body">${escapeHtml(a.content || '')}</p>
+      </div>
+      <div class="annotation-item-actions">
+        <button type="button" class="annotation-edit" data-id="${a.id}">Editar</button>
+        <button type="button" class="annotation-delete delete" data-id="${a.id}">Eliminar</button>
+      </div>
+    </div>
+  `).join('');
+  panel.querySelectorAll('.annotation-edit').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const all = await getAnnotationsByProject(pid);
+      const one = all.find(x => x.id === Number(btn.dataset.id));
+      if (one) {
+        panel.querySelector('.annotation-id').value = one.id;
+        panel.querySelector('.annotation-title').value = one.title || '';
+        panel.querySelector('.annotation-content').value = one.content || '';
+      }
+    });
+  });
+  panel.querySelectorAll('.annotation-delete').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (confirm('¿Eliminar esta anotación?')) {
+        await deleteAnnotation(btn.dataset.id);
+        await renderAnnotationsInPanel(panel);
+        updatePublicAnnotationCounts();
+      }
+    });
+  });
+}
+
+async function updatePublicAnnotationCounts() {
+  const items = await getAllProjects();
+  for (const p of items) {
+    const count = (await getAnnotationsByProject(p.id)).length;
+    const card = document.querySelector(`.project-card[data-project-id="${p.id}"]`);
+    if (card) {
+      const countEl = card.querySelector('.annotations-count');
+      if (countEl) countEl.textContent = count;
+    }
+  }
+}
+
+function bindPublicAnnotationsDropdowns() {
+  document.querySelectorAll('.annotations-toggle').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const dropdown = btn.closest('.project-annotations-dropdown');
+      const content = dropdown.querySelector('.annotations-dropdown-content');
+      const isOpen = !content.classList.contains('hidden');
+      content.classList.toggle('hidden', isOpen);
+      if (!isOpen) {
+        const pid = btn.dataset.projectId;
+        const annotations = await getAnnotationsByProject(pid);
+        content.innerHTML = annotations.length
+          ? annotations.map(a => `
+              <div class="annotation-dropdown-item">
+                <strong>${escapeHtml(a.title || 'Sin título')}</strong>
+                <p>${escapeHtml((a.content || '').slice(0, 200))}${(a.content || '').length > 200 ? '…' : ''}</p>
+              </div>
+            `).join('')
+          : '<p class="annotations-empty">Sin anotaciones.</p>';
+      }
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.project-annotations-dropdown')) return;
+    document.querySelectorAll('.annotations-dropdown-content').forEach(el => el.classList.add('hidden'));
+  });
 }
 
 function renderProjectsGrid() {
-  getAllProjects().then(items => {
+  getAllProjects().then(async items => {
     const grid = document.getElementById('projects-grid');
     const staticCards = document.querySelectorAll('#projects-grid [data-static]');
     const dynamic = items.map(p => `
-      <article class="project-card glass">
+      <article class="project-card glass" data-project-id="${p.id}">
         <h3 class="font-mono">${escapeHtml(p.title)}</h3>
         <p>${escapeHtml(p.description || '')}</p>
         <div class="project-tags">${(p.technologies || '').split(',').map(t => t.trim()).filter(Boolean).map(t => `<span>${escapeHtml(t)}</span>`).join('')}</div>
-        <a href="${escapeHtml(p.url || '#')}" class="btn btn-small" target="_blank" rel="noopener">GitHub</a>
+        <div class="project-card-footer">
+          <a href="${escapeHtml(p.url || '#')}" class="btn btn-small" target="_blank" rel="noopener">GitHub</a>
+          <div class="project-annotations-dropdown">
+            <button type="button" class="btn btn-ghost btn-small annotations-toggle" data-project-id="${p.id}">Anotaciones (<span class="annotations-count">0</span>)</button>
+            <div class="annotations-dropdown-content hidden"></div>
+          </div>
+        </div>
       </article>
     `).join('');
     grid.innerHTML = staticCards.length ? (staticCards[0].outerHTML + dynamic) : dynamic;
+    bindPublicAnnotationsDropdowns();
+    updatePublicAnnotationCounts();
   });
 }
 
@@ -535,6 +689,7 @@ async function init() {
   initTypewriter();
   initTabs();
   initNav();
+  bindAnnotationsModal();
   await openDB();
   await loadProjects();
   await loadEvents();

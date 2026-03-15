@@ -14,7 +14,8 @@ function getData() {
     events: [],
     notes: [],
     goals: [],
-    roadmap: []
+    roadmap: [],
+    annotations: []
   };
 }
 
@@ -65,7 +66,45 @@ async function updateProject(id, data) {
 
 async function deleteProject(id) {
   const d = getData();
-  d.projects = d.projects.filter(p => p.id !== Number(id));
+  const numId = Number(id);
+  d.projects = d.projects.filter(p => p.id !== numId);
+  d.annotations = d.annotations.filter(a => a.projectId !== numId);
+  saveData(d);
+}
+
+// --- Anotaciones (por proyecto) ---
+async function getAnnotationsByProject(projectId) {
+  const d = getData();
+  return (d.annotations || []).filter(a => a.projectId === Number(projectId));
+}
+
+async function addAnnotation(projectId, data) {
+  const d = getData();
+  d.annotations = d.annotations || [];
+  const id = nextId(d.annotations);
+  d.annotations.push({
+    id,
+    projectId: Number(projectId),
+    title: data.title || '',
+    content: data.content || '',
+    created: Date.now()
+  });
+  saveData(d);
+  return id;
+}
+
+async function updateAnnotation(id, data) {
+  const d = getData();
+  d.annotations = d.annotations || [];
+  const i = d.annotations.findIndex(a => a.id === Number(id));
+  if (i === -1) return;
+  d.annotations[i] = { ...d.annotations[i], ...data, id: Number(id) };
+  saveData(d);
+}
+
+async function deleteAnnotation(id) {
+  const d = getData();
+  d.annotations = (d.annotations || []).filter(a => a.id !== Number(id));
   saveData(d);
 }
 

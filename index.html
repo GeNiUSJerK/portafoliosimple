@@ -369,6 +369,27 @@
     <p class="font-mono">// built with &lt;3 — static + JSON</p>
   </footer>
 
+  <!-- Ventana emergente: Anotaciones del proyecto -->
+  <div class="annotations-modal hidden" id="annotations-modal" aria-modal="true" role="dialog" aria-labelledby="annotations-modal-title">
+    <div class="annotations-modal-backdrop"></div>
+    <div class="annotations-modal-content glass" data-project-id="">
+      <header class="annotations-modal-header">
+        <h3 class="annotations-modal-title font-mono" id="annotations-modal-title">Anotaciones — <span class="annotations-modal-project-name"></span></h3>
+        <button type="button" class="annotations-modal-close" aria-label="Cerrar">&times;</button>
+      </header>
+      <div class="annotations-form">
+        <input type="hidden" class="annotation-id" value="">
+        <label><span>Título</span><input type="text" class="annotation-title" placeholder="Título de la anotación"></label>
+        <label><span>Contenido</span><textarea class="annotation-content" placeholder="Notas, técnicas, ideas..."></textarea></label>
+        <div class="form-actions">
+          <button type="button" class="btn btn-primary annotation-save">Guardar</button>
+          <button type="button" class="btn btn-ghost annotation-cancel">Cancelar</button>
+        </div>
+      </div>
+      <div class="annotations-list"></div>
+    </div>
+  </div>
+
   <script src="db.js"></script>
   <script src="app.js"></script>
 </body>
