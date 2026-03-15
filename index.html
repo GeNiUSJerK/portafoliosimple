@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iván Peña | Portafolio — Dev & Ciberseguridad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <header class="header">
+    <nav class="nav">
+      <a href="#hero" class="nav-logo">&lt;/&gt;</a>
+      <ul class="nav-links">
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#tech-stack">Tech Stack</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#calendario">Calendario</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#notas">Notas</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">disponible para proyectos</div>
+        <h1 class="hero-title">
+          <span class="font-mono">Hola, soy</span>
+          <span class="hero-name font-mono" id="hero-name">Iván Peña</span>
+        </h1>
+        <p class="hero-subtitle">
+          <span class="typewriter" id="typewriter"></span>
+          <span class="cursor">|</span>
+        </p>
+        <div class="hero-cta">
+          <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+          <a href="#contacto" class="btn btn-ghost">Contactar</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card glass">
+          <pre class="hero-code font-mono"><code><span class="code-keyword">const</span> dev = {
+  focus: <span class="code-string">'security'</span>,
+  stack: [<span class="code-string">'JS'</span>, <span class="code-string">'Python'</span>],
+  learning: <span class="code-keyword">true</span>
+};</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre mí -->
+    <section id="sobre-mi" class="section">
+      <div class="container">
+        <h2 class="section-title font-mono">&lt;sobre_mí&gt;</h2>
+        <div class="about-grid">
+          <div class="about-card glass">
+            <h3 class="font-mono">Quién soy</h3>
+            <p>Soy un estudiante de ingenieria en ciberseguridad, motivado en aprender este mundo y poder aplicar mis conocimientos en la vida real y de manera practica, siempre fui curioso sobre este mundo, ahora que lo estoy
+              aprendiendo estoy mas motivado aun a fortalecer mis conocimientos y ser un profesional de calidad. Todo es posible, siempre y cuando no te de un bug que tire el sistema.
+            </p>
+          </div>
+          <div class="about-card glass">
+            <h3 class="font-mono">Metas técnicas</h3>
+            <p>Objetivos a corto y largo plazo: certificaciones, lenguajes, dominios (redes, forense, pentesting, automatización). Fortalecerme en el area de mi especialidad y lo que pide el mercado actual.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech-stack" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title font-mono">&lt;tech_stack&gt;</h2>
+        <div class="stack-matrix">
+          <div class="stack-category">
+            <h3 class="font-mono">Lenguajes</h3>
+            <div class="stack-icons" id="stack-languages">
+              <span class="stack-icon" title="Python">Python</span>
+              <span class="stack-icon" title="JavaScript">JS</span>
+              <span class="stack-icon" title="HTML/CSS">HTML</span>
+              <span class="stack-icon" title="CMD">CMD</span>
+              <span class="stack-icon" title="SQL">SQL</span>
+            </div>
+          </div>
+          <div class="stack-category">
+            <h3 class="font-mono">Herramientas</h3>
+            <div class="stack-icons" id="stack-tools">
+              <span class="stack-icon" title="Git">Git</span>
+              <span class="stack-icon" title="VS Code">VS Code</span>
+              <span class="stack-icon" title="Linux">Linux</span>
+              <span class="stack-icon" title="SSH">SSH</span>
+              <span class="stack-icon" title="Laragon">Laragon</span>
+              <span class="stack-icon" title="Node.js">Node.js</span>
+              <span class="stack-icon" title="Packet Tracer">Packet Tracer</span>
+              <span class="stack-icon" title="VirtualBox">VirtualBox</span>
+            </div>
+          </div>
+          <div class="stack-category">
+            <h3 class="font-mono">Sistemas</h3>
+            <div class="stack-icons" id="stack-systems">
+              <span class="stack-icon" title="Kali Linux">Kali</span>
+              <span class="stack-icon" title="Ubuntu">Ubuntu</span>
+              <span class="stack-icon" title="Windows">Windows</span>
+              <span class="stack-icon" title="Alma Linux">Alma</span>
+              <span class="stack-icon" title="Android">Android</span>
+            </div>
+          </div>
+        </div>
+        <div class="certifications glass">
+          <h3 class="font-mono">Certificaciones</h3>
+          <ul class="cert-list" id="cert-list">
+            <li>En proceso: eJPT, CEH u otras (actualiza cuando las tengas).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proyectos — layout completo -->
+    <section id="proyectos" class="section section-alt page-section">
+      <div class="container">
+        <header class="page-section-header">
+          <h2 class="section-title font-mono">&lt;proyectos&gt;</h2>
+          <p class="section-desc">Trabajos y repositorios. Gestiona los proyectos desde el <a href="#dashboard">Dashboard</a>.</p>
+        </header>
+        <div class="projects-grid" id="projects-grid">
+          <article class="project-card glass" data-static>
+            <h3 class="font-mono">Portafolio + Dashboard</h3>
+            <p>Este sitio: estático en GitHub Pages con JSON en localStorage.</p>
+            <div class="project-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+            <a href="https://github.com/GeNiUSJerK" class="btn btn-small" target="_blank" rel="noopener">GitHub</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendario — layout completo -->
+    <section id="calendario" class="section page-section">
+      <div class="container">
+        <header class="page-section-header">
+          <h2 class="section-title font-mono">&lt;calendario&gt;</h2>
+          <p class="section-desc">Eventos de aprendizaje y fechas importantes. Añade y edita desde el <a href="#dashboard">Dashboard</a> → Calendario.</p>
+        </header>
+        <div class="calendar-layout glass">
+          <div class="calendar-events" id="calendar-events-view"></div>
+          <p class="page-empty font-mono" id="calendar-empty">Sin eventos. Añade el primero en el Dashboard.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap — layout completo -->
+    <section id="roadmap" class="section section-alt page-section">
+      <div class="container">
+        <header class="page-section-header">
+          <h2 class="section-title font-mono">&lt;roadmap&gt;</h2>
+          <p class="section-desc">Línea de tiempo de proyectos y metas. Gestiona los ítems en el <a href="#dashboard">Dashboard</a> → Roadmap.</p>
+        </header>
+        <div class="timeline" id="roadmap-timeline">
+          <div class="timeline-line"></div>
+          <div class="timeline-items" id="timeline-items"></div>
+        </div>
+        <p class="page-empty font-mono" id="roadmap-empty">Sin ítems en el roadmap. Añade el primero en el Dashboard.</p>
+      </div>
+    </section>
+
+    <!-- Notas — layout completo -->
+    <section id="notas" class="section page-section">
+      <div class="container">
+        <header class="page-section-header">
+          <h2 class="section-title font-mono">&lt;notas&gt;</h2>
+          <p class="section-desc">Notas de ciberseguridad y aprendizaje. Crea y edita desde el <a href="#dashboard">Dashboard</a> → Notas.</p>
+        </header>
+        <div class="notes-grid" id="notes-view">
+          <!-- Tarjetas de notas inyectadas por JS -->
+        </div>
+        <p class="page-empty font-mono" id="notes-empty">Sin notas. Añade la primera en el Dashboard.</p>
+      </div>
+    </section>
+
+    <!-- Checklist — layout completo -->
+    <section id="checklist" class="section section-alt page-section">
+      <div class="container">
+        <header class="page-section-header">
+          <h2 class="section-title font-mono">&lt;checklist&gt;</h2>
+          <p class="section-desc">Objetivos y metas. Marca completados y añade nuevos en el <a href="#dashboard">Dashboard</a> → Checklist.</p>
+        </header>
+        <div class="checklist-layout glass">
+          <div class="checklist-progress" id="checklist-progress">
+            <span class="font-mono">0 / 0 completados</span>
+          </div>
+          <ul class="checklist-view-list" id="checklist-view">
+            <!-- Objetivos inyectados por JS (solo lectura visual) -->
+          </ul>
+        </div>
+        <p class="page-empty font-mono" id="checklist-empty">Sin objetivos. Añade el primero en el Dashboard.</p>
+      </div>
+    </section>
+
+    <!-- Dashboard CRUD (panel privado) -->
+    <section id="dashboard" class="section">
+      <div class="container">
+        <h2 class="section-title font-mono">&lt;dashboard&gt;</h2>
+        <p class="section-desc">Panel de control local: proyectos, calendario, notas y checklist. Todo se guarda en JSON en tu navegador (localStorage) y persiste tras recargar (F5). Cuando tengas los proyectos listos y el roadmap validado, puedes eliminar esta sección.</p>
+
+        <div class="dashboard-tabs">
+          <button class="tab-btn active" data-tab="proyectos-crud">Proyectos</button>
+          <button class="tab-btn" data-tab="calendario">Calendario</button>
+          <button class="tab-btn" data-tab="roadmap-crud">Roadmap</button>
+          <button class="tab-btn" data-tab="notas">Notas</button>
+          <button class="tab-btn" data-tab="checklist">Checklist</button>
+        </div>
+
+        <div class="dashboard-panels">
+          <!-- Proyectos CRUD -->
+          <div class="tab-panel active" id="panel-proyectos-crud">
+            <div class="crud-form glass">
+              <h3 class="font-mono">Añadir / Editar proyecto</h3>
+              <input type="hidden" id="project-id" value="">
+              <label>
+                <span>Título</span>
+                <input type="text" id="project-title" placeholder="Nombre del proyecto">
+              </label>
+              <label>
+                <span>Descripción</span>
+                <textarea id="project-desc" placeholder="Breve descripción"></textarea>
+              </label>
+              <label>
+                <span>Tecnologías (separadas por coma)</span>
+                <input type="text" id="project-tech" placeholder="JS, Python, Docker">
+              </label>
+              <label>
+                <span>URL GitHub</span>
+                <input type="url" id="project-url" placeholder="https://github.com/...">
+              </label>
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="project-save">Guardar</button>
+                <button type="button" class="btn btn-ghost" id="project-cancel">Cancelar</button>
+              </div>
+            </div>
+            <div class="crud-list" id="projects-crud-list"></div>
+          </div>
+
+          <!-- Calendario / Eventos (persistente en tu navegador) -->
+          <div class="tab-panel" id="panel-calendario">
+            <div class="crud-form glass">
+              <h3 class="font-mono">Calendario de aprendizaje</h3>
+              <p class="form-hint">Añade eventos con fecha; se guardan para siempre en tu navegador (también tras F5).</p>
+              <h4 class="font-mono">Nuevo evento</h4>
+              <input type="hidden" id="event-id" value="">
+              <label>
+                <span>Título</span>
+                <input type="text" id="event-title" placeholder="Ej: Curso de redes">
+              </label>
+              <label>
+                <span>Fecha</span>
+                <input type="date" id="event-date">
+              </label>
+              <label>
+                <span>Notas</span>
+                <textarea id="event-notes" placeholder="Detalles opcionales"></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="event-save">Guardar</button>
+                <button type="button" class="btn btn-ghost" id="event-cancel">Cancelar</button>
+              </div>
+            </div>
+            <div class="crud-list" id="events-list"></div>
+          </div>
+
+          <!-- Roadmap CRUD -->
+          <div class="tab-panel" id="panel-roadmap-crud">
+            <div class="crud-form glass">
+              <h3 class="font-mono">Añadir / Editar ítem del roadmap</h3>
+              <input type="hidden" id="roadmap-id" value="">
+              <label>
+                <span>Título</span>
+                <input type="text" id="roadmap-title" placeholder="Nombre del proyecto o hito">
+              </label>
+              <label>
+                <span>Descripción</span>
+                <textarea id="roadmap-desc" placeholder="Breve descripción"></textarea>
+              </label>
+              <label>
+                <span>Estado</span>
+                <select id="roadmap-state">
+                  <option value="idea">Idea futura</option>
+                  <option value="in_progress">En desarrollo</option>
+                  <option value="completed">Completado</option>
+                </select>
+              </label>
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="roadmap-save">Guardar</button>
+                <button type="button" class="btn btn-ghost" id="roadmap-cancel">Cancelar</button>
+              </div>
+            </div>
+            <div class="crud-list" id="roadmap-crud-list"></div>
+          </div>
+
+          <!-- Notas -->
+          <div class="tab-panel" id="panel-notas">
+            <div class="crud-form glass">
+              <h3 class="font-mono">Nueva nota (ciberseguridad / general)</h3>
+              <input type="hidden" id="note-id" value="">
+              <label>
+                <span>Título</span>
+                <input type="text" id="note-title" placeholder="Título de la nota">
+              </label>
+              <label>
+                <span>Contenido</span>
+                <textarea id="note-content" placeholder="Contenido en markdown o texto plano"></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="note-save">Guardar</button>
+                <button type="button" class="btn btn-ghost" id="note-cancel">Cancelar</button>
+              </div>
+            </div>
+            <div class="crud-list" id="notes-list"></div>
+          </div>
+
+          <!-- Checklist objetivos -->
+          <div class="tab-panel" id="panel-checklist">
+            <div class="crud-form glass">
+              <h3 class="font-mono">Nuevo objetivo</h3>
+              <input type="hidden" id="goal-id" value="">
+              <label>
+                <span>Objetivo</span>
+                <input type="text" id="goal-text" placeholder="Ej: Completar certificación X">
+              </label>
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="goal-save">Añadir</button>
+                <button type="button" class="btn btn-ghost" id="goal-cancel">Cancelar</button>
+              </div>
+            </div>
+            <ul class="checklist-list" id="checklist-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title font-mono">&lt;contacto&gt;</h2>
+        <div class="contact-box glass">
+          <p>¿Colaboración o consulta? Escríbeme.</p>
+          <a href="mailto:vixion.ware@gmail.com" class="contact-email font-mono">vixion.ware@gmail.com</a>
+          <div class="contact-links">
+            <a href="https://github.com/GeNiUSJerK" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/iv%C3%A1n-pe%C3%B1a-7697233b7/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="font-mono">// built with &lt;3 — static + JSON</p>
+  </footer>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
