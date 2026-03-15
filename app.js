@@ -710,15 +710,8 @@ function bindDashboardGate() {
         return;
       }
 
-      const stored = getStoredCredentials();
-      if (!stored) {
-        setStoredCredentials(u, p);
-        setSession();
-        showDashboardGate(false);
-        if (hint) hint.textContent = '';
-        return;
-      }
-      if (stored.u === u && stored.p === p) {
+      const master = getMasterCredentials();
+      if (master && master.u === u && master.p === p) {
         setSession();
         showDashboardGate(false);
         if (hint) hint.textContent = '';

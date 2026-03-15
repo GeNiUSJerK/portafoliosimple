@@ -4,9 +4,8 @@
  */
 const LS_KEY = 'portfolio_json';
 
-// Claves con nombres poco llamativos para no revelar propósito (F12)
-const _r0 = '_r0';   // referencia de estado / cache
-const _s0 = '_s0';   // sesión
+// Clave de sesión (nombre poco llamativo)
+const _s0 = '_s0';
 
 function _x(s, k) {
   if (!s || !k) return '';
@@ -32,24 +31,17 @@ function _dec(s) {
   } catch (_) { return ''; }
 }
 
-/** Obtiene credenciales almacenadas (ofuscadas). Devuelve { u, p } o null. */
-function getStoredCredentials() {
+/** Credencial única (ofuscada). Para cambiar: F12 → Consola → pega _enc(JSON.stringify({u:'tu_user',p:'tu_pass'})) → copia el resultado y reemplaza la cadena de abajo. */
+var _c0 = 'TERGQwNHYQ9LCFYLFUoRERtfFVcDUwBWD1kdQ0Q=';
+
+/** Devuelve la credencial maestra { u, p } (la que definiste arriba). */
+function getMasterCredentials() {
   try {
-    var raw = localStorage.getItem(_r0);
-    if (!raw) return null;
-    var json = _dec(raw);
+    var json = _dec(_c0);
     if (!json) return null;
     var o = JSON.parse(json);
     return o && (o.u !== undefined || o.p !== undefined) ? { u: o.u || '', p: o.p || '' } : null;
   } catch (_) { return null; }
-}
-
-/** Guarda credenciales (ofuscadas). Solo un usuario. */
-function setStoredCredentials(u, p) {
-  try {
-    var payload = _enc(JSON.stringify({ u: String(u || ''), p: String(p || '') }));
-    localStorage.setItem(_r0, payload);
-  } catch (_) {}
 }
 
 /** Comprueba si hay sesión válida. */
