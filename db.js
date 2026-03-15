@@ -4,6 +4,76 @@
  */
 const LS_KEY = 'portfolio_json';
 
+// Claves con nombres poco llamativos para no revelar propósito (F12)
+const _r0 = '_r0';   // referencia de estado / cache
+const _s0 = '_s0';   // sesión
+
+function _x(s, k) {
+  if (!s || !k) return '';
+  var r = '', i = 0;
+  for (var j = 0; j < s.length; j++) {
+    r += String.fromCharCode(s.charCodeAt(j) ^ k.charCodeAt(i % k.length));
+    i++;
+  }
+  return r;
+}
+
+function _enc(v) {
+  try {
+    var j = typeof v === 'string' ? v : JSON.stringify(v);
+    return btoa(unescape(encodeURIComponent(_x(j, '7f3a9e'))));
+  } catch (_) { return ''; }
+}
+
+function _dec(s) {
+  try {
+    var raw = decodeURIComponent(escape(atob(s)));
+    return _x(raw, '7f3a9e');
+  } catch (_) { return ''; }
+}
+
+/** Obtiene credenciales almacenadas (ofuscadas). Devuelve { u, p } o null. */
+function getStoredCredentials() {
+  try {
+    var raw = localStorage.getItem(_r0);
+    if (!raw) return null;
+    var json = _dec(raw);
+    if (!json) return null;
+    var o = JSON.parse(json);
+    return o && (o.u !== undefined || o.p !== undefined) ? { u: o.u || '', p: o.p || '' } : null;
+  } catch (_) { return null; }
+}
+
+/** Guarda credenciales (ofuscadas). Solo un usuario. */
+function setStoredCredentials(u, p) {
+  try {
+    var payload = _enc(JSON.stringify({ u: String(u || ''), p: String(p || '') }));
+    localStorage.setItem(_r0, payload);
+  } catch (_) {}
+}
+
+/** Comprueba si hay sesión válida. */
+function hasValidSession() {
+  try {
+    var raw = localStorage.getItem(_s0);
+    if (!raw) return false;
+    var t = _dec(raw);
+    return t === '1' || (parseInt(t, 10) && Date.now() - parseInt(t, 10) < 86400000);
+  } catch (_) { return false; }
+}
+
+/** Establece sesión (valor ofuscado). */
+function setSession() {
+  try {
+    localStorage.setItem(_s0, _enc(String(Date.now())));
+  } catch (_) {}
+}
+
+/** Cierra sesión. */
+function clearSession() {
+  try { localStorage.removeItem(_s0); } catch (_) {}
+}
+
 function getData() {
   try {
     const raw = localStorage.getItem(LS_KEY);

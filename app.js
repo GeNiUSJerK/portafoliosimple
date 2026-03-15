@@ -684,12 +684,77 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// --- Dashboard: puerta de acceso (usuario + contraseña, datos ofuscados) ---
+function showDashboardGate(show) {
+  const gate = document.getElementById('dashboard-gate');
+  const content = document.getElementById('dashboard-content');
+  if (gate) gate.classList.toggle('hidden', !show);
+  if (content) content.classList.toggle('hidden', show);
+}
+
+function bindDashboardGate() {
+  const form = document.getElementById('gate-form');
+  const hint = document.getElementById('gate-hint');
+  const logoutBtn = document.getElementById('dashboard-logout');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const userInput = document.getElementById('gate-user');
+      const passInput = document.getElementById('gate-pass');
+      const u = (userInput && userInput.value) ? userInput.value.trim() : '';
+      const p = (passInput && passInput.value) ? passInput.value : '';
+
+      if (!u || !p) {
+        if (hint) { hint.textContent = 'Completa usuario y contraseña.'; hint.style.color = ''; }
+        return;
+      }
+
+      const stored = getStoredCredentials();
+      if (!stored) {
+        setStoredCredentials(u, p);
+        setSession();
+        showDashboardGate(false);
+        if (hint) hint.textContent = '';
+        return;
+      }
+      if (stored.u === u && stored.p === p) {
+        setSession();
+        showDashboardGate(false);
+        if (hint) hint.textContent = '';
+      } else {
+        if (hint) { hint.textContent = 'Usuario o contraseña incorrectos.'; hint.style.color = 'var(--accent-bright)'; }
+      }
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      clearSession();
+      showDashboardGate(true);
+      const userInput = document.getElementById('gate-user');
+      const passInput = document.getElementById('gate-pass');
+      if (userInput) userInput.value = '';
+      if (passInput) passInput.value = '';
+      if (hint) hint.textContent = '';
+    });
+  }
+}
+
 // --- Inicio ---
 async function init() {
   initTypewriter();
   initTabs();
   initNav();
   bindAnnotationsModal();
+  bindDashboardGate();
+
+  if (hasValidSession()) {
+    showDashboardGate(false);
+  } else {
+    showDashboardGate(true);
+  }
+
   await openDB();
   await loadProjects();
   await loadEvents();

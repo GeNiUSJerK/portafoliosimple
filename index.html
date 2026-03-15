@@ -212,7 +212,29 @@
     <section id="dashboard" class="section">
       <div class="container">
         <h2 class="section-title font-mono">&lt;dashboard&gt;</h2>
-        <p class="section-desc">Panel de control local: proyectos, calendario, notas y checklist. Todo se guarda en JSON en tu navegador (localStorage) y persiste tras recargar (F5). Cuando tengas los proyectos listos y el roadmap validado, puedes eliminar esta sección.</p>
+
+        <!-- Pantalla de acceso: usuario + contraseña (oculto tras login) -->
+        <div class="dashboard-gate glass" id="dashboard-gate">
+          <p class="section-desc">Acceso al panel de control.</p>
+          <form class="gate-form" id="gate-form" autocomplete="off">
+            <label>
+              <span>Usuario</span>
+              <input type="text" id="gate-user" placeholder="Usuario" autocomplete="off">
+            </label>
+            <label>
+              <span>Contraseña</span>
+              <input type="password" id="gate-pass" placeholder="Contraseña" autocomplete="new-password">
+            </label>
+            <p class="gate-hint font-mono" id="gate-hint"></p>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="gate-submit">Entrar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Contenido del dashboard (visible solo tras acceso correcto) -->
+        <div class="dashboard-content hidden" id="dashboard-content">
+        <p class="section-desc">Panel de control local: proyectos, calendario, notas y checklist. Todo se guarda en JSON en tu navegador (localStorage) y persiste tras recargar (F5). <button type="button" class="btn btn-ghost btn-small" id="dashboard-logout">Cerrar sesión</button></p>
 
         <div class="dashboard-tabs">
           <button class="tab-btn active" data-tab="proyectos-crud">Proyectos</button>
@@ -345,6 +367,7 @@
             </div>
             <ul class="checklist-list" id="checklist-list"></ul>
           </div>
+        </div>
         </div>
       </div>
     </section>

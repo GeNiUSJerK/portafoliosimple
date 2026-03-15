@@ -639,6 +639,55 @@ body {
   display: none !important;
 }
 
+/* ===== Dashboard: pantalla de acceso ===== */
+.dashboard-gate {
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  max-width: 380px;
+  margin-top: var(--space-md);
+}
+
+.dashboard-gate .section-desc {
+  margin-bottom: var(--space-lg);
+}
+
+.gate-form label {
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.gate-form label span {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.gate-form input[type="text"],
+.gate-form input[type="password"] {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.gate-form input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.gate-hint {
+  font-size: 0.875rem;
+  margin: var(--space-sm) 0;
+  min-height: 1.25rem;
+}
+
 /* ===== Ventana emergente: Anotaciones ===== */
 .annotations-modal {
   position: fixed;
